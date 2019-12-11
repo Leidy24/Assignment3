@@ -1,0 +1,46 @@
+//Leidyane Gonzalez
+//12/09/19
+
+import java.util.*;
+import java.io.*;
+
+public class assignment_3{
+
+   private static HashMap<String, Integer> frequency = new HashMap<>();
+
+   //function to add the data into HashMap
+   public static void countTheWords(String lyrics){
+
+       String[] words = lyrics.toUpperCase().replace(" ", ",").trim().split(",");
+       for(String word : words){
+           Integer n = frequency.get(word);
+   n = (n == null) ? 1 : ++n;
+   frequency.put(word, n);
+       }
+       frequency.remove("");
+   }
+
+   //function to print the map
+   public static void printTheWords(){
+       for(Map.Entry<String, Integer> entry : frequency.entrySet()){
+           System.out.println(entry.getKey()+" "+entry.getValue());
+       }
+   }
+
+   public static void main(String[] args){
+
+       File file = new File("lyrics.txt");
+       try{
+           Scanner sc = new Scanner(file);
+           String lyrics;
+           while(sc.hasNextLine()){
+               lyrics = sc.nextLine();
+               countTheWords(lyrics);
+           }
+           printTheWords();
+       }
+       catch(FileNotFoundException E){
+           System.out.println("File not found");
+       }
+   }
+}
